@@ -158,20 +158,21 @@
 
 <script>
     // ======================================================================
-    // 🔴🔴🔴 EMAILJS SETTINGS: PASTE YOUR 3 CODES HERE 🔴🔴🔴
+    // 🔴🔴🔴 EMAILJS SETTINGS 🔴🔴🔴
     // ======================================================================
     
-    // 1. Paste your PUBLIC KEY inside the quotes below:
     const MY_PUBLIC_KEY = "bseiUD6GcmqOYQOFo"; 
-    
-    // 2. Paste your SERVICE ID inside the quotes below:
     const MY_SERVICE_ID = "service_n642cwh"; 
-    
-    // 3. Paste your TEMPLATE ID inside the quotes below:
     const MY_TEMPLATE_ID = "template_bqe7x9g";
-  
-  // ======================================================================
-    // (Do not change anything below this line!)
+
+    // ======================================================================
+    // 🎵 SOUND EFFECTS SETTINGS 🎵
+    // ======================================================================
+    
+    const correctSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2870/2870-preview.mp3");
+    const wrongSound = new Audio("https://assets.mixkit.co/active_storage/sfx/946/946-preview.mp3");
+    const cheerSound = new Audio("https://assets.mixkit.co/active_storage/sfx/518/518-preview.mp3");
+
     // ======================================================================
 
     emailjs.init(MY_PUBLIC_KEY); 
@@ -253,8 +254,18 @@
         if (selected === correctAnswer) {
             score++;
             btnElement.classList.add('correct'); 
+            
+            // 🔊 PLAY CORRECT SOUND
+            correctSound.currentTime = 0; // Reset sound to start
+            correctSound.play();
+            
         } else {
             btnElement.classList.add('wrong'); 
+            
+            // 🔊 PLAY WRONG SOUND
+            wrongSound.currentTime = 0; // Reset sound to start
+            wrongSound.play();
+            
             allButtons.forEach(b => {
                 if (parseInt(b.innerText) === correctAnswer) {
                     b.classList.add('correct');
@@ -285,6 +296,10 @@
         document.getElementById('display-name').innerText = kidName;
         document.getElementById('final-score').innerText = score;
         document.getElementById('final-time').innerText = finalTimeStr;
+
+        // 🔊 PLAY CHEER SOUND
+        cheerSound.currentTime = 0;
+        cheerSound.play();
 
         triggerConfetti();
         sendAutomaticEmail(kidName, score, finalTimeStr);
